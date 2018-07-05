@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Tyler McGinnis Modern Javascript</title>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<script>
+			// Object and Array Destructing 
+			// Destructuring gives us a convenient way to extract values from data stored in objects and arrays.
+			// Instead of using object literal notation and setting property one at a time you can do them all at once with object destructing 
+
+			// e.g. this
+			function register (props) {
+			  var onChangeEmail = props.onChangeEmail;
+			  var email = props.email;
+			  var onChangePassword = props.onChangePassword;
+			  var password = props.password;
+			  var submit = props.submit;
+			  return (
+			    <div>
+			      <span>Email:</span>
+			      <input type='text' onChange={onChangeEmail} value={email} />
+			      <span>Password:</span>
+			      <input type='text' onChange={onChangePassword} value={password} />
+			      <button onClick={submit}>Submit</button>
+			    </div>
+			  )
+			}
+
+			// is the same as this
+			function register (props) {
+			  var { onChangeEmail, email, onChangePassword, password, submit }  = props;
+			  return (
+			    <div>
+			      <span>Email:</span>
+			      <input type='text' onChange={onChangeEmail} value={email} />
+			      <span>Password:</span>
+			      <input type='text' onChange={onChangePassword} value={password} />
+			      <button onClick={submit}>Submit</button>
+			    </div>
+			  )
+			}
+
+			// another example this 
+			var user {
+				name: 'Tyler McGinnis',
+				handle: '@tylermcginnis33',
+				location: 'Eden, Utah'
+			}
+
+			var name = user.name;
+			var handle = user.handle;
+			var location: user.location;
+
+			// is the same as this
+			var {name, handle, location } = user
+
+
+			// array example
+			var user1 = ['Tyler McGinnis', '@tylermcginnis33', 'Eden, Utah'];
+
+			var [name, handle, location] = user1;
+
+
+
+			// In ES6 if key and value pairs in an object share the same name you can omit the name
+			// e.g.
+			function formatMessage (name, id, avatar) {
+				return {
+					name: name,
+					id: id,
+					avatar: avatar,
+					timestamp: Date.now(),
+					save: function() {
+						// save
+					}
+				}
+			}
+
+			// ES6 version
+			function formatMessage (name, id, avatar) {
+				return {
+					name,
+					id,
+					avatar,
+					timestamp: Date.now(),
+					save () { // shorthand function keyword
+						// save
+					}
+				}
+			}
+
+			// Computed Property Names
+			// ES5 version
+			function objectify (key, value) {
+				let obj = {};
+				obj[key] = value;
+				return obj
+			}
+
+			// ES6 version
+			function objectiy (key, value) {
+				return {
+					[key]: value
+				}
+			}
+
+			objectify('tyler', 27);
+
+			// will return tyler: 27
+
+			// Template Strings
+			// ES5
+
+			function makeGreeting (name, email, id) {
+			  return 'Hello, ' + name + '. We\'ve emailed you at ' + email '. Your user id is ' + id + '.'
+			}
+
+			// ES6
+			function makeGreeting (name, email, id) {
+			  return `Hello, ${name}. We've emailed you at ${email}. Your user id is ${id}.`
+			}
+
+
+			// Why were Arrow Functions added to the spec? They serve two main purposes: more concise syntax and sharing lexical "this" with the parent scope.
+
+			// ES5
+			render () {
+			    return (
+			      <ul>
+			        {this.state.friends.map(function (friend) {
+			          return <FriendItem key={friend.id} handleAddFriend={this.onAddFriend}>{friend.name}</FriendItem>
+			        })}
+			      </ul>        
+			    )
+			}
+
+			// ES6
+
+			render () {
+			    return (
+			      <ul>
+			        {this.state.friends.map((friend) => {
+			          return <FriendItem key={friend.id} handleAddFriend={this.onAddFriend}>{friend.name}></FriendItem>
+			        })}
+			      </ul>
+			    )
+			}
+
+			// ES6 also same line
+
+			render () {
+			    return (
+			      <ul>
+			        {this.state.friends.map((friend) => <FriendItem key={friend.id} handleAddFriend={this.onAddFriend}>{friend.name}</FriendItem>)}
+			      </ul>
+			    )
+			}
+
+			// Default Parameters
+
+			function debounce (func, wait, immediate) {
+			  if (typeof wait === 'undefined') {
+			    wait = 1000
+			  }
+			  var timeout
+			  return function () {
+			    var args = arguments
+			    var later = () => {
+			      timeout = null
+			      if (!immediate) func.apply(this, args)
+			    }
+			    var callNow = immediate && !timeout
+			    clearTimeout(timeout)
+			    timeout = setTimeout(later, wait)
+			    if (callNow) func.apply(this, args)
+			  }
+			}
+
+			// ES6 - Notice the parameter can now take a default
+			function debounce (func, wait = 1000, immediate) {
+			  var timeout
+			  return function () {
+			    var args = arguments
+			    var later = () => {
+			      timeout = null
+			      if (!immediate) func.apply(this, args)
+			    }
+			    var callNow = immediate && !timeout
+			    clearTimeout(timeout)
+			    timeout = setTimeout(later, wait)
+			    if (callNow) func.apply(this, args)
+			  }
+			}
+
+		</script>
+	</head>
+	<body></body>
+</html>
