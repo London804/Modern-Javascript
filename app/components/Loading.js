@@ -9,34 +9,33 @@ const styles = {
 };
 
 class Loading extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.state = {
       text: props.text
     };
   }
-  componentDidMount() {
-
+  componentDidMount () {
     const { text, speed } = this.props;
     const stopper = text + '...';
 
     this.interval = window.setInterval(() => {
       if (this.state.text === stopper) {
         this.setState(() => {
-          // ES5 return 
+          // ES5 return
           return {
             text: this.props.text
           };
         });
       } else {
         // es6 implied return with object literal
-        this.setState((prevState) => ({ text: prevState.text + '.' }));
+        this.setState((prevState) => ({ text: prevState.text + '.' }))
       }
     }, speed);
   }
 
-  // this can be refactored further using ternary operator 
+  // this can be refactored further using ternary operator
   // componentDidMount() {
   //    const { text, speed } = this.props
   //    const stopper = text + '...';
@@ -47,7 +46,7 @@ class Loading extends React.Component {
   //    }, speed)
 
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.clearInterval(this.interval);
   }
   render() {
