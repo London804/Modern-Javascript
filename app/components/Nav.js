@@ -1,5 +1,10 @@
-var React = require('react');
-var NavLink = require('react-router-dom').NavLink;
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+// ES5 version
+
+// var React = require('react');
+// var NavLink = require('react-router-dom').NavLink;
 
 function Nav () {
   return (
