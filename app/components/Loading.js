@@ -9,12 +9,17 @@ const styles = {
 };
 
 class Loading extends React.Component {
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      text: props.text
-    };
+  // example of class properties. This has not been finalized yet so the linter complains. 
+ static propTypes = {
+    text: PropTypes.string.isRequired,
+    speed: PropTypes.number.isRequired,
+  }
+  static defaultProps = {
+    text: 'Loading',
+    speed: 300
+  }
+  state = {
+    text: this.props.text
   }
   componentDidMount () {
     const { text, speed } = this.props;
